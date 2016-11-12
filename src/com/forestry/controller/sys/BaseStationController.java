@@ -439,46 +439,66 @@ public class BaseStationController extends ForestryBaseController<BaseStation>{
 						
 						Contract contract = new Contract();
 						contract.setRequirementNo(requirementNo);
-						if (contractService.getByProerties("requirementNo", requirementNo) == null) {
+						Contract tmpContract = contractService.getByProerties("requirementNo", requirementNo);
+						if (tmpContract == null) {
 							contractService.persist(contract);
 							log.info("contract.getId()=" + contract.getId());
 							bs.setCid(contract.getId());
+						} else {
+							bs.setCid(tmpContract.getId());
 						}
 						
 						PtReport pt = new PtReport();
 						pt.setRequirementNo(requirementNo);
-						if (ptReportService.getByProerties("requirementNo", requirementNo) == null) {
+						PtReport tmpPt = ptReportService.getByProerties("requirementNo", requirementNo);
+						if (tmpPt == null) {
 							ptReportService.persist(pt);
 							log.info("pt.getId()=" + pt.getId());
 							bs.setPtid(pt.getId());
+						} else {
+							bs.setPtid(tmpPt.getId());
+							pt = tmpPt;
 						}
 						
 						YdReport yd = new YdReport();
 						yd.setRequirementNo(requirementNo);
-						if (ydReportService.getByProerties("requirementNo", requirementNo) == null) {
+						YdReport tmpYd = ydReportService.getByProerties("requirementNo", requirementNo);
+						if (tmpYd == null) {
 							ydReportService.persist(yd);
 							log.info("yd.getId()=" + yd.getId());
 							bs.setYdid(yd.getId());
+						} else {
+							bs.setYdid(tmpYd.getId());
+							yd = tmpYd;
 						}
 						
 						TjReport tj = new TjReport();
 						tj.setRequirementNo(requirementNo);
-						if (tjReportService.getByProerties("requirementNo", requirementNo) == null) {
+						TjReport tmpTj = tjReportService.getByProerties("requirementNo", requirementNo);
+						if (tmpTj == null) {
 							tjReportService.persist(tj);
 							log.info("tj.getId()=" + tj.getId());
 							bs.setTjid(tj.getId());
+						} else {
+							bs.setTjid(tmpTj.getId());
+							tj = tmpTj;
 						}
 						
 						TowerReport tower = new TowerReport();
 						tower.setRequirementNo(requirementNo);
-						if (towerReportService.getByProerties("requirementNo", requirementNo) == null) {
+						TowerReport tmpTower = towerReportService.getByProerties("requirementNo", requirementNo);
+						if (tmpTower == null) {
 							towerReportService.persist(tower);
 							log.info("tower.getId()=" + tower.getId());
 							bs.setTowerid(tower.getId());
+						} else {
+							bs.setTowerid(tmpTower.getId());
+							tower = tmpTower;
 						}
 						
 						baseStationService.updateByPK(bs, requirementNo);
 						log.info("Imported record id is: " + bs.getId() + ", cid is "+ bs.getCid());
+						
 						
 						Integer bsId = bs.getId();
 					
